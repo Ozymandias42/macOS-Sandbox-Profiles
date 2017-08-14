@@ -55,6 +55,7 @@
 
 ;;Required to read application set system-preferences. Won't start without.
 (allow user-preference-read)
+(allow user-preference-write)
 
 ;;No idea. Works without. Probably important for speed?
 (allow system-fsctl (fsctl-command #x682f))
@@ -97,25 +98,27 @@
 (regex #"/Users/[a-zA-Z]+/Library/Logs/Skype.*")
 (regex #"/Users/[a-zA-Z]+/Library/Caches/com\.skype\.skype.*")
 (regex #"/Users/[a-zA-Z]+/\.rnd")
-(regex #"/Users/[a-zA-Z]+/Library/Keychains/\.[a-zA-Z0-9]{11}")
+(regex #"/Users/[a-zA-Z]+/Library/Keychains/\.[a-zA-Z0-9]+")
+(regex #"/Users/[a-zA-Z]+/Library/Keychains/login\.keychain-db$")
+(regex #"/Users/[a-zA-Z]+/Library/Keychains/login.keychain-db.sb-[a-z0-9]+-[a-zA-Z0-9]+")
 (regex #"/Users/[a-zA-Z]+/Library/Group Containers/AL798K98FX\.com\.skype\.skype/.*")
-(regex #"/Users[a-zA-Z]+/Library/Address Book Plug-Ins/.*\.bundle")
+(regex #"/Users/[a-zA-Z]+/Library/Address Book Plug-Ins/.*")
 (regex #"/Users/[a-zA-Z]+/Library/Preferences/rtcpal_registry\.reg")
-(regex #"/Users/[a-zA-Z]+/LaunchAgents/com.skype.skype.shareagent.plist")
-(regex #"/Users/[a-zA-Z]+/Library/Keychains/login.keychain-db.sb-[a-z0-9]{8}-[a-zA-Z0-9]{6}")
+(regex #"/Users/[a-zA-Z]+/Library/Preferences/com\.skype\.plist")
+(regex #"/Users/[a-zA-Z]+/Library/LaunchAgents/com\.skype\.skype\.shareagent\.plist")
 (subpath "/private/var")
 (regex #"/Users/[a-zA-Z]+/Library/Application Support/Skype/.*")
 (regex #"/Users/[a-zA-Z]+/Library/Group Containers/AL798K98FX\.com\.skype\.skype/Library/Logs/com\.skype\.skype\.sharing/.*")
 (regex #"/Users/[a-zA-Z]+/Library/Logs/LwaTracing/LccMedia/Skype.*")
-(regex #"/Users/[a-zA-Z]+/Downloads/Skype Downloads/.*")
 (regex #"/Users/[a-zA-Z]+/Library/Saved Application State/com\.skype\.skype\.savedState.*")
 )
 
-
+(allow file-write-data file-read-data
+(path "/Library/Application Support/CrashReporter/SubmitDiagInfo.domains")
+)
 (allow file-read-data
-(regex #"/Users/[a-zA-Z]+/Library/Keychains/\.[a-zA-Z0-9]{10}")
+;;(regex #"/Users/[a-zA-Z]+/Library/Keychains/\.[a-zA-Z0-9]{10}")
 (subpath "/Library/Frameworks/TSLicense.framework")
-(regex #"/Users/[a-zA-Z]+/Library/Keychains/login\.keychain-db$")
 (regex #"/Users/[a-zA-Z]+/Library/Keychains/Microsoft_Intermediate_Certificates")
 (regex #"/Users/[a-zA-Z]+/Library/Sounds/.*")
 (regex #"/Users/[a-zA-Z]+/Library/Audio/Plug-Ins/Components/.+")
@@ -179,6 +182,7 @@
  (global-name "com.apple.windowserver.active")
  (global-name "com.skype.skype.ServiceProvider")
  (global-name "mul-xpc (Apple)_OpenStep")
+ (global-name "com.apple.mediaremoted.xpc")
 )
 
 ;;Needed to Register XPC nodes
@@ -192,15 +196,16 @@
 	(ipc-posix-name-regex #"AudioIO.+")
 	(ipc-posix-name "FNetwork.defaultStorageSession")
 	(ipc-posix-name "CFPBS:186A7:")
-
+	(ipc-posix-name "com.apple.AppleDatabaseChanged")
 )
 (allow ipc-posix-shm-read-data
-	(ipc-posix-name "com.apple.DatabaseChanged")
+	(ipc-posix-name "/tmp/com.apple.csseed.184")
 )
 
 ;;Driver-access. Required for HW-accell stuff like OpenGL, Audio, etc.
 (allow iokit-open
 	(iokit-registry-entry-class "nvFermiGLContext") ;;required for receiving ScreenSharing transmissions
+	(iokit-registry-entry-class "IOFramebufferSharedUserClient")
 	(iokit-registry-entry-class "IOAudioEngineUserClient")
 	(iokit-registry-entry-class "AppleGraphicsControlClient")
 	(iokit-registry-entry-class "IGAccelCommandQueue")
