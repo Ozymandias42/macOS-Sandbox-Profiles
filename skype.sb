@@ -76,7 +76,7 @@
 (regex #"/Users/[a-zA-Z]+/Library/Sounds.*")
 (regex #"/Users/[a-zA-Z]+/Library/Spelling.*")
 (path "/Library/Preferences/com.apple.security.plist")
-(path "/Users/fabian/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist")
+(regex "/Users/[a-zA-Z]+/Library/Preferences/com\.apple\.LaunchServices/com\.apple\.launchservices\.secure\.plist")
 (regex #"/Users/[a-zA-Z]+/Library/Keyboard Layouts")
 (regex #"/Users/[a-zA-Z]+/Library/Input Methods")
 (regex #"/Users/[a-zA-Z]+/Library/Application Support")
@@ -200,6 +200,7 @@
 
 ;;Driver-access. Required for HW-accell stuff like OpenGL, Audio, etc.
 (allow iokit-open
+	(iokit-registry-entry-class "nvFermiGLContext") ;;required for receiving ScreenSharing transmissions
 	(iokit-registry-entry-class "IOAudioEngineUserClient")
 	(iokit-registry-entry-class "AppleGraphicsControlClient")
 	(iokit-registry-entry-class "IGAccelCommandQueue")

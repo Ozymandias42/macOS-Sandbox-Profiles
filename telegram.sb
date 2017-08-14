@@ -21,6 +21,7 @@
 ;;(trace "telegram-trace.sb")
 (allow signal (target self))
 (import "/System/Library/Sandbox/Profiles/bsd.sb")
+(allow user-preference-write)
 (allow system-socket)
 (allow process-exec
 	(subpath "/Applications/Telegram.app")
@@ -31,7 +32,9 @@
 ;;Block with full FS-Write access rules.
 (allow file*
 (subpath "/private/var/folders/pz")
-(regex #"/Users/[a-zA-Z]+/Library/Group Containers/[0-9A-Z]{10}\.ru.keepcoder/.+")
+(regex #"/Users/[a-zA-Z]+/Library/Group Containers/.+\.ru.keepcoder.+")
+(regex #"/Users/[a-zA-Z]+/Library/Caches/ru\.keepcoder\.Telegram.*")
+(regex #"/Users/[a-zA-Z]+/Library/Saved Application State/ru\.keepcoder\.Telegram")
 )
 (allow user-preference-read)
 (allow file-issue-extension
@@ -45,6 +48,10 @@
 	
 )
 (allow file-read-data
+(regex #"/Users/[a-zA-Z]+/Library/Preferences/com\.apple\.LaunchServices/com\.apple\.launchservices\.secure\.plist")
+(regex #"/Users/[a-zA-Z]+/Library/Preferences/com\.apple\.security\.plist")
+(regex #"/Users/[a-zA-Z]+/Library/Keyboard.*")
+(regex #"/Users/[a-zA-Z]+/Library/Input Methods.*")
 (path "/Library/Preferences/.GlobalPreferences.plist")
 (path "/Library/Preferences/com.apple.security.plist")
 (path "/Library/Application Support/CrashReporter/SubmitDiagInfo.domains")
@@ -52,8 +59,8 @@
 (subpath "/Library/Audio/Plug-Ins/HAL")
 )
 (allow file-write*
-	(regex #"/Users/[a-zA-Z]+/Library/.*")
-	(regex #"/Users/[a-zA-Z]/Downloads/Telegram Desktop.*") ;; <== YOUR DOWNLOAD FOLDER HERE!!
+	;;(regex #"/Users/[a-zA-Z]+/Library/.*")
+	(regex #"/Users/[a-zA-Z]/Downloads/Telegram Desktop/.*") ;; <== YOUR DOWNLOAD FOLDER HERE!!
 )
 
 ;;Blanko-access to Network. Should probably be more restricted.
@@ -77,6 +84,9 @@
 
 ;;Access to tons of Apple's XPC stuff, to allow access to numerous system frameworks
 (allow mach-lookup
+	(global-name "com.apple.audio.SystemSoundServer-OSX")
+	(global-name "com.apple.quicklook.ui.helper.active")
+	(global-name "com.apple.quicklook.ui.helper")
 	(global-name "com.apple.mediaremoted.xpc")
 	(global-name "com.apple.coremedia.endpointpicker.xpc")
 	(global-name "com.apple.coremedia.endpoint.xpc")
