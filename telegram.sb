@@ -35,16 +35,16 @@
 (regex #"/Users/[a-zA-Z]+/Library/Group Containers/.+\.ru.keepcoder.+")
 (regex #"/Users/[a-zA-Z]+/Library/Caches/ru\.keepcoder\.Telegram.*")
 (regex #"/Users/[a-zA-Z]+/Library/Saved Application State/ru\.keepcoder\.Telegram")
+(regex #"/Users/[a-zA-Z]/Downloads/Telegram Desktop/.*") ;; <== YOUR DOWNLOAD FOLDER HERE!!
 )
 (allow user-preference-read)
 (allow file-issue-extension
 (regex #"/Users/[a-zA-Z]+/Library/Caches/ru\.keepcoder\.Telegram.*")
 )
 (allow file-read*
-	(regex #"/Users/[a-zA-Z]+]/Library")
+	(regex #"/Users/[a-zA-Z]+/.+")
 	(subpath "/Library/Fonts")
 	(subpath "/Applications/Telegram.app")
-	(regex #"/Users/[a-zA-Z]+/Downloads/Telegram Desktop")
 	
 )
 (allow file-read-data
@@ -57,10 +57,6 @@
 (path "/Library/Application Support/CrashReporter/SubmitDiagInfo.domains")
 (path "/private/var/db/mds/messages/503/se_SecurityMessages")
 (subpath "/Library/Audio/Plug-Ins/HAL")
-)
-(allow file-write*
-	;;(regex #"/Users/[a-zA-Z]+/Library/.*")
-	(regex #"/Users/[a-zA-Z]/Downloads/Telegram Desktop/.*") ;; <== YOUR DOWNLOAD FOLDER HERE!!
 )
 
 ;;Blanko-access to Network. Should probably be more restricted.

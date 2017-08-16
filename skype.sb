@@ -69,6 +69,7 @@
 ;;All following regex rules are required to enable usage from arbitrary users.
 (allow file-read*
 	(subpath "/Applications/Skype.app/")
+	(regex #"/Users/[a-zA-Z]+")
 	(regex #"/Users/[a-zA-Z]+/Library/Caches/com\.skype\.skype/.+")
 )
 (allow file-read-data 
