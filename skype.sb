@@ -130,7 +130,11 @@
 
 ;;Copy-pasted from output from (trace "out.sb")
 (allow mach-lookup
+(global-name "com.apple.audio.SystemSoundServer-OSX")
+ (global-name "com.apple.lsd-modifydb")
+ (global-name "com.apple.FileCoordination")
  (global-name "com.apple.quicklook")
+ (global-name "com.apple.quicklook.ui.helper")
  (global-name "com.apple.modifydb")
  (global-name "com.apple.cache_delete")
  (global-name "com.apple.coreservices.sharedfilelistd.xpc")
